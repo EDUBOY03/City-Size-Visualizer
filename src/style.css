@@ -18,14 +18,20 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+}
+
 .color-box {
-  display: inline-block;
   width: 15px;
   height: 15px;
   margin-right: 5px;
   border: 1px solid black;
 }
 
-.red { background: rgba(255, 0, 0, 0.5); }
-.orange { background: rgba(255, 165, 0, 0.5); }
-.green { background: rgba(0, 128, 0, 0.5); }
+.red { background: rgba(220, 20, 60, 0.7); }    /* > 20 млн */
+.orange { background: rgba(255, 140, 0, 0.7); }  /* 10-20 млн */
+.yellow { background: rgba(255, 215, 0, 0.7); }  /* 5-10 млн */
+.green { background: rgba(50, 205, 50, 0.7); }   /* 1-5 млн */
