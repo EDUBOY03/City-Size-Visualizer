@@ -1,14 +1,27 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
-    
-  </body>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Карта городов</title>
+    <link rel="stylesheet" href="src/style.css">
+</head>
+<body>
+    <div id="map"></div>
+    <div id="legend">
+        <strong>Легенда:</strong>
+    <div style="display: flex; align-items: center; margin-top: 5px;">
+      <div style="width: 15px; height: 15px; background: rgba(220, 20, 60, 0.7); border: 1px solid black; margin-right: 5px;"></div> > 20 млн
+    </div>
+    <div style="display: flex; align-items: center; margin-top: 5px;">
+      <div style="width: 15px; height: 15px; background: rgba(255, 140, 0, 0.7); border: 1px solid black; margin-right: 5px;"></div> 10-20 млн
+    </div>
+    <div style="display: flex; align-items: center; margin-top: 5px;">
+      <div style="width: 15px; height: 15px; background: rgba(255, 215, 0, 0.7); border: 1px solid black; margin-right: 5px;"></div> 5-10 млн
+    </div>
+    <div style="display: flex; align-items: center; margin-top: 5px;">
+      <div style="width: 15px; height: 15px; background: rgba(50, 205, 50, 0.7); border: 1px solid black; margin-right: 5px;"></div> 1-5 млн
+    </div>
+    <script type="module" src="src/main.js"></script>
+</body>
 </html>

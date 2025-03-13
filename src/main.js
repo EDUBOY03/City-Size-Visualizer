@@ -10,7 +10,7 @@ import Point from 'ol/geom/Point';
 import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style';
 import { fromLonLat } from 'ol/proj';
 
-// Данные о городах (название, долгота, широта, население)
+
 const cities = [
   { name: "Москва", coords: [37.6173, 55.7558], population: 12600000 },
   { name: "Нью-Йорк", coords: [-74.006, 40.7128], population: 8419000 },
@@ -64,27 +64,23 @@ const cities = [
   { name: "Сантьяго", coords: [-70.6693, -33.4489], population: 7032000 }
 ];
 
-// Функция для создания точек на карте
-const features = cities.map(city => {
+
+const features = cities.map(({ name, coords, population }) => {
   const feature = new Feature({
-    geometry: new Point(fromLonLat(city.coords)), // Конвертация координат
-    name: city.name
+    geometry: new Point(fromLonLat(coords)),
+    name
   });
 
-  // Определяем цвет круга в зависимости от населения
-  const color = city.population > 20000000 ? 'rgba(220, 20, 60, 0.7)' : // Кричащий красный
-              city.population > 10000000 ? 'rgba(255, 140, 0, 0.7)' : // Тёмно-оранжевый
-              city.population > 5000000 ? 'rgba(255, 215, 0, 0.7)' : // Золотой
-              city.population > 1000000 ? 'rgba(50, 205, 50, 0.7)' : // Лаймовый
-              'rgba(70, 130, 180, 0.7)'; // Стальной синий
+  const color = population > 10000000 ? 'rgba(255, 0, 0, 0.5)' :
+                population > 5000000 ? 'rgba(255, 165, 0, 0.5)' : 
+                'rgba(0, 128, 0, 0.5)';
 
-  // Размер круга зависит от населения (корень из населения / 100)
-  const radius = Math.sqrt(city.population) / 100;
+  const radius = Math.sqrt(population) / 100;
 
   feature.setStyle(new Style({
     image: new CircleStyle({
-      radius: radius,
-      fill: new Fill({ color: color }),
+      radius,
+      fill: new Fill({ color }),
       stroke: new Stroke({ color: 'black', width: 1 })
     })
   }));
@@ -92,48 +88,20 @@ const features = cities.map(city => {
   return feature;
 });
 
-// Создаём векторный слой для городов
+
 const cityLayer = new VectorLayer({
-  source: new VectorSource({
-    features: features
-  })
+  source: new VectorSource({ features })
 });
 
-// Создаём контейнер для карты
-document.body.innerHTML = `
-  <div id="map" style="width:100vw; height:100vh; position:relative;"></div>
-  <div id="legend" style="
-    position: absolute; 
-    bottom: 20px; 
-    left: 20px; 
-    background: white; 
-    padding: 10px; 
-    border-radius: 5px; 
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    font-family: Arial, sans-serif;
-  ">
-    <strong>Легенда:</strong>
-    <div style="display: flex; align-items: center; margin-top: 5px;">
-      <div style="width: 15px; height: 15px; background: rgba(255, 0, 0, 0.5); border: 1px solid black; margin-right: 5px;"></div> > 10 млн
-    </div>
-    <div style="display: flex; align-items: center; margin-top: 5px;">
-      <div style="width: 15px; height: 15px; background: rgba(255, 165, 0, 0.5); border: 1px solid black; margin-right: 5px;"></div> 5-10 млн
-    </div>
-    <div style="display: flex; align-items: center; margin-top: 5px;">
-      <div style="width: 15px; height: 15px; background: rgba(0, 128, 0, 0.5); border: 1px solid black; margin-right: 5px;"></div> < 5 млн
-    </div>
-  </div>
-`;
 
-// Создаём карту
 const map = new Map({
   target: 'map',
   layers: [
-    new TileLayer({ source: new OSM() }), // Подложка OpenStreetMap
-    cityLayer // Слой с городами
+    new TileLayer({ source: new OSM() }),
+    cityLayer
   ],
   view: new View({
-    center: fromLonLat([30, 50]), // Центрируем на Европе
+    center: fromLonLat([30, 50]),
     zoom: 3
   })
 });
